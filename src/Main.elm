@@ -1,17 +1,10 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Time exposing (Time, second)
-import Debug exposing (..)
 import Keyboard.Extra exposing (Key)
-import List exposing (..)
-
-
--- import Html.Attributes exposing (..)
--- import Html.Events exposing (..)
-
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
+import Time exposing (Time, second)
 
 
 -- MODEL
@@ -66,11 +59,12 @@ update msg model =
 
                 newPlayer =
                     model.player
-                        |> \p ->
-                            { p
-                                | x = Basics.min (model.screen.width - p.width) <| Basics.max 0 (p.x + x * 50)
-                                , y = Basics.min (model.screen.height - p.height) <| Basics.max 0 (p.y - y * 50)
-                            }
+                        |> (\p ->
+                                { p
+                                    | x = Basics.min (model.screen.width - p.width) <| Basics.max 0 (p.x + x * 50)
+                                    , y = Basics.min (model.screen.height - p.height) <| Basics.max 0 (p.y - y * 50)
+                                }
+                           )
             in
                 ( { model
                     | pressedKeys = newPressedKeys
@@ -93,7 +87,7 @@ view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString model.screen.width), height (toString model.screen.height) ]
         [ Svg.rect [ width "650", height "650", fill "darksalmon" ] []
-        , (player model.player)
+        , player model.player
         ]
 
 
