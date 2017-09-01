@@ -31,7 +31,16 @@ type alias Model =
     , screen : Screen
     , currentTime : Time
     , board : Board
+    , bombs : List Bomb
     }
+
+
+type alias Bomb =
+    { spot : Spot, reach : Int, timestamp : Time }
+
+
+type alias Spot =
+    ( Int, Int )
 
 
 type Msg
@@ -119,6 +128,7 @@ init : Float -> ( Model, Cmd Msg )
 init seed =
     ( { pressedKeys = []
       , currentTime = 0
+      , bombs = [ { spot = ( 2, 2 ), timestamp = seed, reach = 1 } ]
       , player =
             { x = 0
             , y = 0
