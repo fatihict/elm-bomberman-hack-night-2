@@ -22,3 +22,13 @@ draw bomb =
         , fill "black"
         ]
         []
+
+
+splitExploded : Time -> List Bomb -> ( List Bomb, List Bomb )
+splitExploded t bombs =
+    List.partition (isTimeExceeded t) bombs
+
+
+isTimeExceeded : Time -> Bomb -> Bool
+isTimeExceeded t bomb =
+    bomb.timestamp + Time.second * 2.0 < t

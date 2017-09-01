@@ -49,12 +49,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Tick newTime ->
-            ( { model
-                | currentTime = newTime
-                , bombs = List.map (updateBombTick newTime) model.bombs
-              }
-            , Cmd.none
-            )
+            let
+                ( exploded, notExploded ) =
+                    Bomb.splitExploded newTime model.bombs
+            in
+                ( { model
+                    | currentTime = newTime
+                    , bombs = notExploded
+                  }
+                , Cmd.none
+                )
 
         KeyMsg keyMsg ->
             let
