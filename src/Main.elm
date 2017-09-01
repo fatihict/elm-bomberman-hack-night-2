@@ -105,8 +105,8 @@ subscriptions state =
 -- INIT
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Float -> ( Model, Cmd Msg )
+init seed =
     ( { pressedKeys = []
       , currentTime = 0
       , player =
@@ -124,9 +124,9 @@ init =
     )
 
 
-main : Program Never Model Msg
+main : Program Float Model Msg
 main =
-    Html.program
+    Html.programWithFlags
         { init = init
         , update = update
         , view = view

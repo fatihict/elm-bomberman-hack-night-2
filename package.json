@@ -1,0 +1,25 @@
+{
+    "name": "elm-bomberman-hack-night-2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "elm-live": "^2.7.5"
+    },
+    "devDependencies": {
+        "elm-live": "^2.7.5"
+    },
+    "scripts": {
+        "dev": "elm-live src/Main.elm --output=elm.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fatihict/elm-bomberman-hack-night-2.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/fatihict/elm-bomberman-hack-night-2/issues"
+    },
+    "homepage": "https://github.com/fatihict/elm-bomberman-hack-night-2#readme"
+}
