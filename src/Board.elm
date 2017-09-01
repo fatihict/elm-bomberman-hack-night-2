@@ -15,7 +15,10 @@ init w h =
 
 initialTile : Int -> Int -> Tile
 initialTile x y =
-    Tile.Floor
+    if x % 2 == 1 && y % 2 == 1 then
+        Tile.Wall
+    else
+        Tile.Floor
 
 
 type Board
