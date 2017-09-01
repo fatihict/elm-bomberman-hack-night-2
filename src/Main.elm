@@ -5,7 +5,7 @@ import Keyboard.Extra exposing (Key)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 import Time exposing (Time, second)
-import Board
+import Board exposing (Board)
 
 
 -- MODEL
@@ -30,6 +30,7 @@ type alias Model =
     , player : Player
     , screen : Screen
     , currentTime : Time
+    , board : Board
     }
 
 
@@ -87,7 +88,7 @@ player model =
 view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString model.screen.width), height (toString model.screen.height) ]
-        [ Board.draw (Board.init 13 13)
+        [ Board.draw model.board
         , player model
         ]
 
@@ -119,6 +120,7 @@ init seed =
             { width = 650
             , height = 650
             }
+      , board = Board.init 13 13
       }
     , Cmd.none
     )
