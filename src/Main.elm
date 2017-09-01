@@ -115,8 +115,7 @@ subscriptions : Model -> Sub Msg
 subscriptions state =
     Sub.batch
         [ Sub.map KeyMsg Keyboard.Extra.subscriptions
-
-        -- Time.every second Tick
+        , Time.every second Tick
         ]
 
 

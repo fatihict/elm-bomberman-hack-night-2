@@ -31,7 +31,7 @@ draw offsetX offsetY tile =
                 , y (toString (offsetY * tileSize))
                 , rx "4"
                 , ry "4"
-                , fill "black"
+                , fill "forestgreen"
                 ]
                 []
 
@@ -51,6 +51,6 @@ draw offsetX offsetY tile =
                 , height (toString tileSize)
                 , x (toString (offsetX * tileSize))
                 , y (toString (offsetY * tileSize))
-                , fill "salmon"
+                , fill "lightblue"
                 ]
                 []
