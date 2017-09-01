@@ -15,6 +15,12 @@ init w h =
         w
         (\x -> Array.initialize h (\y -> initialTile x y))
         |> addCrate 1 0
+        |> addCrate 2 1
+        |> addCrate 3 2
+        |> addCrate 4 3
+        |> addCrate 5 4
+        |> addCrate 6 5
+        |> addCrate 7 6
         |> Board
 
 
