@@ -40,11 +40,6 @@ type Msg
 -- UPDATE
 
 
-updateBombTick : Time -> Bomb -> Bomb
-updateBombTick time bomb =
-    { bomb | timestamp = time }
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
