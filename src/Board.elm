@@ -43,6 +43,14 @@ type Board
     = Board (Array (Array Tile))
 
 
+canMoveToSpot : Int -> Int -> Board -> Bool
+canMoveToSpot x y (Board board) =
+    Array.get x board
+        |> Maybe.andThen (Array.get y)
+        |> Maybe.map Tile.isFloor
+        |> Maybe.withDefault False
+
+
 draw : Board -> Svg.Svg msg
 draw (Board board) =
     let
