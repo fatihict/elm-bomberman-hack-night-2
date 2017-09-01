@@ -58,13 +58,14 @@ update msg model =
 
                 { x, y } =
                     Keyboard.Extra.arrows model.pressedKeys
+                        |> Debug.log "Arrows"
 
                 newPlayer =
                     model.player
                         |> (\p ->
                                 { p
                                     | x = Basics.min ((model.screen.width // p.width) - 1) <| Basics.max 0 (p.x + x)
-                                    , y = Basics.min ((model.screen.height // p.height) - 1) <| Basics.max 0 p.y - y
+                                    , y = Basics.min ((model.screen.height // p.height) - 1) <| Basics.max 0 (p.y - y)
                                 }
                            )
             in
