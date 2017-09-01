@@ -60,14 +60,22 @@ update msg model =
                     Keyboard.Extra.arrows model.pressedKeys
                         |> Debug.log "Arrows"
 
-                newPlayer =
+                player =
                     model.player
-                        |> (\p ->
-                                { p
-                                    | x = Basics.min ((model.screen.width // p.width) - 1) <| Basics.max 0 (p.x + x)
-                                    , y = Basics.min ((model.screen.height // p.height) - 1) <| Basics.max 0 (p.y - y)
-                                }
-                           )
+
+                ( newX, newY ) =
+                    ( Basics.min (model.screen.width - 1) <| Basics.max 0 (player.x + x)
+                    , Basics.min (model.screen.height - 1) <| Basics.max 0 (player.y - y)
+                    )
+
+                newPlayer =
+                    if Board.canMoveToSpot newX newY model.board then
+                        { player
+                            | x = newX
+                            , y = newY
+                        }
+                    else
+                        player
             in
                 ( { model
                     | pressedKeys = newPressedKeys
@@ -88,7 +96,7 @@ player model =
 
 view : Model -> Html Msg
 view model =
-    Svg.svg [ width (toString model.screen.width), height (toString model.screen.height) ]
+    Svg.svg [ width (toString <| model.screen.width * 50), height (toString <| model.screen.height * 50) ]
         [ Board.draw model.board
         , player model
         ]
@@ -118,8 +126,8 @@ init seed =
             , height = 50
             }
       , screen =
-            { width = 650
-            , height = 650
+            { width = 13
+            , height = 13
             }
       , board = Board.init 13 13
       }
