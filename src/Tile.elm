@@ -15,6 +15,11 @@ tileSize =
     50
 
 
+isFloor : Tile -> Bool
+isFloor =
+    (==) Floor
+
+
 draw : Int -> Int -> Tile -> Svg.Svg msg
 draw offsetX offsetY tile =
     case tile of
