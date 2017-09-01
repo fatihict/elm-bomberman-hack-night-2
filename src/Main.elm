@@ -61,8 +61,8 @@ update msg model =
                     model.player
                         |> (\p ->
                                 { p
-                                    | x = Basics.min (model.screen.width - p.width) <| Basics.max 0 (p.x + x * 50)
-                                    , y = Basics.min (model.screen.height - p.height) <| Basics.max 0 (p.y - y * 50)
+                                    | x = Basics.min ((model.screen.width // p.width) - 1) <| Basics.max 0 (p.x + x)
+                                    , y = Basics.min ((model.screen.height // p.height) - 1) <| Basics.max 0 p.y - y
                                 }
                            )
             in
@@ -78,16 +78,16 @@ update msg model =
 -- VIEW
 
 
-player : Player -> Html Msg
-player player =
-    Svg.rect [ x (toString player.x), y (toString player.y), width "50", height "50", fill "red" ] []
+player : Model -> Html Msg
+player model =
+    Svg.rect [ x (toString (model.player.x * model.player.width)), y (toString (model.player.y * model.player.height)), width "50", height "50", fill "red" ] []
 
 
 view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString model.screen.width), height (toString model.screen.height) ]
         [ Svg.rect [ width "650", height "650", fill "darksalmon" ] []
-        , player model.player
+        , player model
         ]
 
 
