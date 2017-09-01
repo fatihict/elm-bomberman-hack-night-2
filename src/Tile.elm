@@ -4,14 +4,18 @@ import Svg
 import Svg.Attributes exposing (..)
 
 
+type alias Spot =
+    ( Int, Int )
+
+
 type Tile
     = Floor
     | Wall
     | Crate
 
 
-tileSize : Int
-tileSize =
+size : Int
+size =
     50
 
 
@@ -25,10 +29,10 @@ draw offsetX offsetY tile =
     case tile of
         Wall ->
             Svg.rect
-                [ width (toString tileSize)
-                , height (toString tileSize)
-                , x (toString (offsetX * tileSize))
-                , y (toString (offsetY * tileSize))
+                [ width (toString size)
+                , height (toString size)
+                , x (toString (offsetX * size))
+                , y (toString (offsetY * size))
                 , rx "4"
                 , ry "4"
                 , fill "forestgreen"
@@ -37,20 +41,20 @@ draw offsetX offsetY tile =
 
         Crate ->
             Svg.rect
-                [ width (toString tileSize)
-                , height (toString tileSize)
-                , x (toString (offsetX * tileSize))
-                , y (toString (offsetY * tileSize))
+                [ width (toString size)
+                , height (toString size)
+                , x (toString (offsetX * size))
+                , y (toString (offsetY * size))
                 , fill "gray"
                 ]
                 []
 
         Floor ->
             Svg.rect
-                [ width (toString tileSize)
-                , height (toString tileSize)
-                , x (toString (offsetX * tileSize))
-                , y (toString (offsetY * tileSize))
+                [ width (toString size)
+                , height (toString size)
+                , x (toString (offsetX * size))
+                , y (toString (offsetY * size))
                 , fill "lightblue"
                 ]
                 []

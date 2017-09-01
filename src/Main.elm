@@ -6,17 +6,16 @@ import Svg exposing (..)
 import Svg.Attributes exposing (..)
 import Time exposing (Time, second)
 import Board exposing (Board)
+import Player exposing (Player)
 
 
 -- MODEL
-
-
-type alias Player =
-    { x : Int
-    , y : Int
-    , width : Int
-    , height : Int
-    }
+-- type alias Player =
+-- { x : Int
+-- , y : Int
+-- , width : Int
+-- , height : Int
+-- }
 
 
 type alias Screen =
@@ -65,24 +64,19 @@ update msg model =
                 newPressedKeys =
                     Keyboard.Extra.update keyMsg model.pressedKeys
 
-                { x, y } =
+                arrowDirection =
                     Keyboard.Extra.arrows model.pressedKeys
                         |> Debug.log "Arrows"
 
                 player =
                     model.player
 
-                ( newX, newY ) =
-                    ( Basics.min (model.screen.width - 1) <| Basics.max 0 (player.x + x)
-                    , Basics.min (model.screen.height - 1) <| Basics.max 0 (player.y - y)
-                    )
+                newPosition =
+                    Player.nextSpot model.screen.width arrowDirection player
 
                 newPlayer =
-                    if Board.canMoveToSpot newX newY model.board then
-                        { player
-                            | x = newX
-                            , y = newY
-                        }
+                    if Board.canMoveToSpot newPosition model.board then
+                        { player | position = newPosition }
                     else
                         player
             in
@@ -96,18 +90,18 @@ update msg model =
 
 
 -- VIEW
-
-
-player : Model -> Html Msg
-player model =
-    Svg.rect [ x (toString (model.player.x * model.player.width)), y (toString (model.player.y * model.player.height)), width "50", height "50", fill "red" ] []
+-- player : Model -> Html Msg
+-- player model =
+--     Svg.rect [ x (toString (model.player.x * model.player.width)), y (toString (model.player.y * model.player.height)), width "50", height "50", fill "red" ] []
 
 
 view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString <| model.screen.width * 50), height (toString <| model.screen.height * 50) ]
         [ Board.draw model.board
-        , player model
+
+        -- , player model
+        , Player.draw model.player
         ]
 
 
@@ -128,12 +122,7 @@ init seed =
     ( { pressedKeys = []
       , currentTime = 0
       , bombs = [ { spot = ( 2, 2 ), timestamp = seed, reach = 1 } ]
-      , player =
-            { x = 0
-            , y = 0
-            , width = 50
-            , height = 50
-            }
+      , player = { position = ( 0, 0 ) }
       , screen =
             { width = 13
             , height = 13
