@@ -6,7 +6,15 @@ import Tile exposing (Tile)
 
 init : Int -> Int -> Board
 init w h =
-    Board Array.empty
+    Board <|
+        Array.initialize
+            w
+            (\x -> Array.initialize h (\y -> initialTile x y))
+
+
+initialTile : Int -> Int -> Tile
+initialTile x y =
+    Tile.Floor
 
 
 type Board
