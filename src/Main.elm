@@ -7,6 +7,7 @@ import Svg.Attributes exposing (..)
 import Time exposing (Time, second)
 import Board exposing (Board)
 import Player exposing (Player)
+import Bomb exposing (Bomb)
 
 
 type alias Screen =
@@ -23,10 +24,6 @@ type alias Model =
     , board : Board
     , bombs : List Bomb
     }
-
-
-type alias Bomb =
-    { spot : Spot, reach : Int, timestamp : Time }
 
 
 type alias Spot =
@@ -83,9 +80,8 @@ view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString <| model.screen.width * 50), height (toString <| model.screen.height * 50) ]
         [ Board.draw model.board
-
-        -- , player model
         , Player.draw model.player
+        , Svg.g [] (List.map Bomb.draw model.bombs)
         ]
 
 
