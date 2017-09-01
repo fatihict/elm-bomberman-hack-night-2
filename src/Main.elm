@@ -40,11 +40,19 @@ type Msg
 -- UPDATE
 
 
+updateBombTick : Time -> Bomb -> Bomb
+updateBombTick time bomb =
+    { bomb | timestamp = time }
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Tick newTime ->
-            ( { model | currentTime = newTime }
+            ( { model
+                | currentTime = newTime
+                , bombs = List.map (updateBombTick newTime) model.bombs
+              }
             , Cmd.none
             )
 
@@ -99,7 +107,7 @@ subscriptions : Model -> Sub Msg
 subscriptions state =
     Sub.batch
         [ Sub.map KeyMsg Keyboard.Extra.subscriptions
-        , Time.every second Tick
+        , Time.every (second / 30) Tick
         ]
 
 
