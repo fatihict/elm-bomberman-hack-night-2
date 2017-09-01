@@ -1,7 +1,7 @@
 module Tile exposing (..)
 
 import Svg
-import Svg.Attributes exposing (fill, width, height, x, y, style)
+import Svg.Attributes exposing (..)
 
 
 type Tile
@@ -24,17 +24,28 @@ draw offsetX offsetY tile =
                 , height (toString tileSize)
                 , x (toString (offsetX * tileSize))
                 , y (toString (offsetY * tileSize))
-                , style "corner-radius: 4px;"
+                , rx "4"
+                , ry "4"
                 , fill "black"
                 ]
                 []
 
-        _ ->
+        Crate ->
             Svg.rect
                 [ width (toString tileSize)
                 , height (toString tileSize)
                 , x (toString (offsetX * tileSize))
                 , y (toString (offsetY * tileSize))
-                , fill "blue"
+                , fill "gray"
+                ]
+                []
+
+        Floor ->
+            Svg.rect
+                [ width (toString tileSize)
+                , height (toString tileSize)
+                , x (toString (offsetX * tileSize))
+                , y (toString (offsetY * tileSize))
+                , fill "salmon"
                 ]
                 []
