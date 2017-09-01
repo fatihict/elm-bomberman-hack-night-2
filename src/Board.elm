@@ -5,12 +5,24 @@ import Tile exposing (Tile)
 import Svg
 
 
+type alias BoardInternal =
+    Array (Array Tile)
+
+
 init : Int -> Int -> Board
 init w h =
-    Board <|
-        Array.initialize
-            w
-            (\x -> Array.initialize h (\y -> initialTile x y))
+    Array.initialize
+        w
+        (\x -> Array.initialize h (\y -> initialTile x y))
+        |> addCrate 1 0
+        |> Board
+
+
+addCrate : Int -> Int -> BoardInternal -> BoardInternal
+addCrate x y matrix =
+    Array.get x matrix
+        |> Maybe.map (\column -> Array.set y Tile.Crate column |> (\newColumn -> Array.set x newColumn matrix))
+        |> Maybe.withDefault matrix
 
 
 initialTile : Int -> Int -> Tile
