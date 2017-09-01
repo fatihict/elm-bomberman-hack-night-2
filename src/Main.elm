@@ -5,6 +5,7 @@ import Keyboard.Extra exposing (Key)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 import Time exposing (Time, second)
+import Board
 
 
 -- MODEL
@@ -87,6 +88,7 @@ view : Model -> Html Msg
 view model =
     Svg.svg [ width (toString model.screen.width), height (toString model.screen.height) ]
         [ Svg.rect [ width "650", height "650", fill "darksalmon" ] []
+        , Board.draw (Board.init 13 13)
         , player model.player
         ]
 

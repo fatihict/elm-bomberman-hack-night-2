@@ -2,6 +2,7 @@ module Board exposing (..)
 
 import Array exposing (..)
 import Tile exposing (Tile)
+import Svg
 
 
 init : Int -> Int -> Board
@@ -19,3 +20,22 @@ initialTile x y =
 
 type Board
     = Board (Array (Array Tile))
+
+
+draw : Board -> Svg.Svg msg
+draw (Board board) =
+    let
+        mapTile : Int -> ( Int, Tile ) -> Svg.Svg msg
+        mapTile x ( y, t ) =
+            Tile.draw x y t
+
+        mapColumn : ( Int, Array Tile ) -> List (Svg.Svg msg) -> List (Svg.Svg msg)
+        mapColumn ( x, column ) b =
+            List.map (mapTile x) (Array.toIndexedList column) ++ b
+
+        gs : List (Svg.Svg msg)
+        gs =
+            List.foldl mapColumn [] (Array.toIndexedList board)
+    in
+        Svg.g []
+            gs
