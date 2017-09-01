@@ -8,6 +8,7 @@ import Time exposing (Time, second)
 import Board exposing (Board)
 import Player exposing (Player)
 import Bomb exposing (Bomb)
+import Tile
 
 
 type alias Screen =
@@ -63,7 +64,8 @@ update msg model =
                     Player.nextSpot model.screen.width arrowDirection player
 
                 newPlayer =
-                    if Board.canMoveToSpot newPosition model.board then
+                    if canMovePlayer newPosition model.board model.bombs then
+                        -- if Board.canMoveToSpot newPosition model.board then
                         { player | position = newPosition }
                     else
                         player
@@ -74,6 +76,14 @@ update msg model =
                   }
                 , Cmd.none
                 )
+
+
+canMovePlayer : Tile.Spot -> Board -> List Bomb -> Bool
+canMovePlayer spot board bombs =
+    if (List.any (.spot >> (==) spot) bombs) then
+        False
+    else
+        Board.canMoveToSpot spot board
 
 
 view : Model -> Html Msg
