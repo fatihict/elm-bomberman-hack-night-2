@@ -9,15 +9,6 @@ import Board exposing (Board)
 import Player exposing (Player)
 
 
--- MODEL
--- type alias Player =
--- { x : Int
--- , y : Int
--- , width : Int
--- , height : Int
--- }
-
-
 type alias Screen =
     { width : Int
     , height : Int
@@ -86,13 +77,6 @@ update msg model =
                   }
                 , Cmd.none
                 )
-
-
-
--- VIEW
--- player : Model -> Html Msg
--- player model =
---     Svg.rect [ x (toString (model.player.x * model.player.width)), y (toString (model.player.y * model.player.height)), width "50", height "50", fill "red" ] []
 
 
 view : Model -> Html Msg
